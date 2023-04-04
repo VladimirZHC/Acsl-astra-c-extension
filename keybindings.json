@@ -1,0 +1,5 @@
+{
+    "key": "ctrl+r",
+    "command": "acsl-astra-c-extension.openRecentFiles",
+    "when": "editorTextFocus"
+} 
