@@ -1,78 +1,85 @@
 {
-  "name": "acsl-astra-c-extension",
-  "displayName": "acsl-astra-c-extension",
-  "description": "",
-  "version": "0.0.2",
-  "engines": {
-    "vscode": "^1.74.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/VladimirZHC/Acsl-astra-c-extension"
-  },
-  "categories": [
-    "Programming Languages"
-  ],
-  "icon": "media/logo.png",
-  "author": {
-    "name": "Vladimir Zhuravlev"
-  },
-  "publisher": "VladimirZHC",
-  "activationEvents": [
-    "onLanguage:c"
-  ],
-  "main": "./extension.ts",
-  "contributes": {
-    "commands": [
-        {
-          "command": "acsl-astra-c-extension.openRecentFiles",
-          "title": "Open Recent Files"
-        }
-      ],
-    "completionItemProviders": [
-        {
-            "language": "c",
-            "provider": "./language-features/acsl.ts"
-        }
+    "name": "acsl-astra-c-extension",
+    "displayName": "acsl-astra-c-extension",
+    "description": "",
+    "version": "0.0.2",
+    "engines": {
+        "vscode": "^1.74.0"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/VladimirZHC/Acsl-astra-c-extension"
+    },
+    "categories": [
+        "Programming Languages"
     ],
-    "languages": [
-      {
-        "id": "acsl",
-        "aliases": [
-          "Astra-Acsl-CSL",
-          "acsl"
-        ],
-        "extensions": [
-          ".cpp",
-          ".c"
-        ],
-        "configuration": "./language-configuration.json"
-      }
+    "icon": "media/logo.png",
+    "author": {
+        "name": "Vladimir Zhuravlev"
+    },
+    "scripts": {
+        "compile": "tsc -p ./"
+    },
+    "publisher": "VladimirZHC",
+    "activationEvents": [
+        "onLanguage:c"
     ],
-    "grammars": [
-      {
-        "language": "acsl",
-        "scopeName": "source.acsl",
-        "path": "./syntaxes/acsl.tmLanguage.json",
-        "embeddedLanguages": {
-          "meta.embedded.block.c": "c",
-          "meta.embedded.block.cpp": "cpp"
-        }
-      },
-      {
-        "language": "c",
-        "scopeName": "source.c",
-        "path": "./syntaxes/c.tmLanguage.json"
-      },
-      {
-        "language": "cpp",
-        "scopeName": "source.cpp",
-        "path": "./syntaxes/cpp.tmLanguage.json"
-      }
-    ] 
-  },
-  "devDependencies": {
-    "@types/vscode": "^1.74.0",
-    "@vsce": "^2.15.0"
-  }
+    "main": "/out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "acsl-astra-c-extension.openRecentFiles",
+                "title": "Open Recent Files"
+            }
+        ],
+        "completionItemProviders": [
+            {
+                "language": "c",
+                "provider": "./language-features/acsl.ts"
+            }
+        ],
+        "languages": [
+            {
+                "id": "acsl",
+                "aliases": [
+                    "Astra-Acsl-CSL",
+                    "acsl"
+                ],
+                "extensions": [
+                    ".cpp",
+                    ".c"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "acsl",
+                "scopeName": "source.acsl",
+                "path": "./syntaxes/acsl.tmLanguage.json",
+                "embeddedLanguages": {
+                    "meta.embedded.block.c": "c",
+                    "meta.embedded.block.cpp": "cpp"
+                }
+            },
+            {
+                "language": "c",
+                "scopeName": "source.c",
+                "path": "./syntaxes/c.tmLanguage.json"
+            },
+            {
+                "language": "cpp",
+                "scopeName": "source.cpp",
+                "path": "./syntaxes/cpp.tmLanguage.json"
+            }
+        ]
+    },
+    "devDependencies": {
+        "@types/vscode": "^1.74.0"
+    },
+    "dependencies": {
+        "tsc": "^2.0.4",
+        "typescript": "^5.0.3",
+        "vsce": "~2.5.3"
+    }
 }
