@@ -1,17 +1,17 @@
 import { ExtensionContext } from 'vscode';
-import { ACSLCompletionItemProvider, 
+import { 
+    CCompletionItemProvider, 
     ACSLDocumentFormattingEditProvider, 
-    CCompletionItemProvider } from '../language-features/acsl';
+    ACSLCompletionItemProvider 
+    } from '../language-features/acsl';
 import * as vscode from 'vscode';
 
 
-
-const completionProvider = new ACSLCompletionItemProvider();
 export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         vscode.languages.registerCompletionItemProvider(
             { scheme: 'file', language: 'c' },
-            completionProvider,
+            new ACSLCompletionItemProvider(),
             '@'
         ),
         

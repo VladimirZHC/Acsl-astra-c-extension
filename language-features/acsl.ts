@@ -69,7 +69,7 @@ export class ACSLDocumentFormattingEditProvider implements vscode.DocumentFormat
     }
 }
 
-export class CCompletionItemProvider implements vscode.CompletionItemProvider {
+export class CCompletionItemProvider implements CompletionItemProvider {
 
     public provideCompletionItems(
         document: vscode.TextDocument, 

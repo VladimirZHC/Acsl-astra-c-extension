@@ -21,21 +21,24 @@
         "compile": "tsc -p ./"
     },
     "publisher": "VladimirZHC",
-    "activationEvents": [
-        "onLanguage:c"
-    ],
     "main": "/out/extension.js",
+    "activationEvents": [
+        "onCommand:extension.sayHello"
+    ],
     "contributes": {
         "commands": [
             {
-                "command": "acsl-astra-c-extension.openRecentFiles",
-                "title": "Open Recent Files"
+                "command": "extension.sayHello",
+                "title": "Hello World"
             }
         ],
         "completionItemProviders": [
             {
                 "language": "c",
-                "provider": "./language-features/acsl.ts"
+                "provider": {
+                    "module": "./out/src/CCompletionItemProvider",
+                    "class": "CCompletionItemProvider"
+                }
             }
         ],
         "languages": [
@@ -78,7 +81,6 @@
         "@types/vscode": "^1.74.0"
     },
     "dependencies": {
-        "tsc": "^2.0.4",
         "typescript": "^5.0.3",
         "vsce": "~2.5.3"
     }
