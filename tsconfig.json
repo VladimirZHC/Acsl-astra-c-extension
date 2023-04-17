@@ -3,5 +3,5 @@
     "outDir": "out",
     "target": "es6"
     },
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*.ts", "src/extension.ts"]
 }

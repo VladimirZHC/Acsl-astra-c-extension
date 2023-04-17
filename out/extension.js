@@ -1,26 +1,5 @@
 // import { ExtensionContext } from 'vscode';
-// import { CCompletionItemProvider, ACSLDocumentFormattingEditProvider, ACSLCompletionItemProvider } from '../language-features/acsl';
 // import * as vscode from 'vscode';
-// export function activate(context: ExtensionContext) {
-//     context.subscriptions.push(
-//         vscode.languages.registerCompletionItemProvider(
-//             { scheme: 'file', language: 'c' },
-//             new ACSLCompletionItemProvider(),
-//             '@'
-//         ),
-//     );
-//     context.subscriptions.push(
-//         vscode.languages.registerDocumentFormattingEditProvider(
-//             'c', new ACSLDocumentFormattingEditProvider()
-//         )
-//     );
-//     context.subscriptions.push(
-//         vscode.languages.registerCompletionItemProvider(
-//             'c',
-//             new CCompletionItemProvider()
-//         )
-//     );
-// }
 // export function openRecentFiles() {
 //     const config = vscode.workspace.getConfiguration('acsl-astra-c-extension');
 //     const maxHistory = config.get<number>('maxRecentFiles') || 5;
@@ -40,11 +19,18 @@
 //       }
 //     });
 //   }
+// export function activate(context: ExtensionContext) {
+//     context.subscriptions.push(vscode.commands.registerCommand('acsl-astra-c-extension.openRecentFiles', () => {
+//         openRecentFiles();
+//     }));
+// }
+
+
 import * as vscode from 'vscode';
 export function activate(context) {
-    console.log('Congratulations, your extension "my-first-extension" is now active!');
-    var disposable = vscode.commands.registerCommand('extension.sayHello', () => {
-        vscode.window.showInformationMessage('Hello World!');
-    });
-    context.subscriptions.push(disposable);
+    const command = 'acsl-astra-c-extension.sayHello';
+    const commandHandler = (name = 'world') => {
+        console.log(`Hello ${name}!!!`);
+    };
+    context.subscriptions.push(vscode.commands.registerCommand(command, commandHandler));
 }

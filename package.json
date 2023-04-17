@@ -17,26 +17,32 @@
     "author": {
         "name": "Vladimir Zhuravlev"
     },
+    "publisher": "VladimirZHC",
     "scripts": {
         "compile": "tsc -p ./"
     },
-    "publisher": "VladimirZHC",
     "main": "/out/extension.js",
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:acsl-astra-c-extension.sayHello"
     ],
     "contributes": {
         "commands": [
             {
-                "command": "extension.sayHello",
-                "title": "Hello World"
+                "command": "acsl-astra-c-extension.sayHello",
+                "title": "Say Hello"
+            }
+        ],
+        "jsonValidation": [
+            {
+                "fileMatch": "c_cpp_properties.json",
+                "url": "cpptools-schema:///c_cpp_properties.schema.json"
             }
         ],
         "completionItemProviders": [
             {
                 "language": "c",
                 "provider": {
-                    "module": "./out/src/CCompletionItemProvider",
+                    "module": "/CCompletionItemProvider",
                     "class": "CCompletionItemProvider"
                 }
             }
@@ -50,7 +56,8 @@
                 ],
                 "extensions": [
                     ".cpp",
-                    ".c"
+                    ".c",
+                    ".h"
                 ],
                 "configuration": "./language-configuration.json"
             }
@@ -75,6 +82,56 @@
                 "scopeName": "source.cpp",
                 "path": "./syntaxes/cpp.tmLanguage.json"
             }
+        ],
+        "problemMatchers": [
+            {
+                "name": "gcc",
+                "source": "gcc",
+                "owner": "cpptools",
+                "fileLocation": [
+                    "autoDetect",
+                    "${cwd}"
+                ],
+                "pattern": {
+                    "regexp": "^(.*?):(\\d+):(\\d*):?\\s+(?:fatal\\s+)?(warning|error):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "column": 3,
+                    "severity": 4,
+                    "message": 5
+                }
+            },
+            {
+                "name": "iar",
+                "source": "iar",
+                "owner": "cpptools",
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "^\"(.*?)\",(\\d+)\\s+(?:[Ff]atal\\s+)?([Ww]arning|[Ee]rror)\\[(\\w+\\d+)\\]:\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "code": 4,
+                    "message": 5
+                }
+            },
+            {
+                "name": "armcc5",
+                "source": "armcc5",
+                "owner": "cpptools",
+                "fileLocation": [
+                    "autoDetect",
+                    "${cwd}"
+                ],
+                "pattern": {
+                    "regexp": "^\"(.*)?\",\\s+line\\s+(\\d+):\\s+([Ee]rror|[Ww]arning):\\s+#(.*?):\\s+(.*)$",
+                    "file": 1,
+                    "line": 2,
+                    "severity": 3,
+                    "code": 4,
+                    "message": 5
+                }
+            }
         ]
     },
     "devDependencies": {
@@ -82,6 +139,8 @@
     },
     "dependencies": {
         "typescript": "^5.0.3",
-        "vsce": "~2.5.3"
+        "vsce": "~2.5.3",
+        "vscode-nls": "^5.2.0",
+        "vscode-nls-dev": "^4.0.3"
     }
 }
