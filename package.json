@@ -23,19 +23,232 @@
     },
     "main": "/out/extension.js",
     "activationEvents": [
-        "onCommand:acsl-astra-c-extension.sayHello"
+        "onCommand:acsl-astra-c-extension.openRecentFiles",
+        "onLanguage:c",
+        "onLanguage:cpp",
+        "onFileSystem:acsl-astra-c-extension-schema",
+        "workspaceContains:/.vscode/c_cpp_properties.json",
+        "onCommand:extension.pickNativeProcess",
+        "onCommand:extension.pickRemoteNativeProcess"
     ],
     "contributes": {
+        "walkthroughs": [
+            {
+                "id": "cppWelcome",
+                "title": "%c_cpp.walkthrough.title%",
+                "description": "%c_cpp.walkthrough.description%",
+                "when": "false",
+                "steps": [
+                    {
+                        "id": "awaiting.activation.mac",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.activating.description%",
+                        "when": "workspacePlatform == mac && cpptools.scanForCompilersDone == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-clang-macos.md"
+                        }
+                    },
+                    {
+                        "id": "awaiting.activation.linux",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.activating.description%",
+                        "when": "workspacePlatform == linux && cpptools.scanForCompilersDone == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-gcc-linux.md"
+                        }
+                    },
+                    {
+                        "id": "awaiting.activation.windows",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.activating.description%",
+                        "when": "workspacePlatform == windows && cpptools.scanForCompilersDone == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-compiler-windows.md"
+                        }
+                    },
+                    {
+                        "id": "no.compilers.found.mac",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.no.compilers.description%",
+                        "when": "workspacePlatform == mac && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == true",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-clang-macos.md"
+                        }
+                    },
+                    {
+                        "id": "no.compilers.found.linux",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.no.compilers.description%",
+                        "when": "workspacePlatform == linux && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == true",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-gcc-linux.md"
+                        }
+                    },
+                    {
+                        "id": "no.compilers.found.windows",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.no.compilers.description%",
+                        "when": "workspacePlatform == windows && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == true",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-compiler-windows.md"
+                        }
+                    },
+                    {
+                        "id": "verify.compiler.mac",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.compilers.found.description%",
+                        "when": "workspacePlatform == mac && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-clang-macos.md"
+                        },
+                        "completionEvents": [
+                            "onContext:cpptools.trustedCompilerFound"
+                        ]
+                    },
+                    {
+                        "id": "verify.compiler.linux",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.compilers.found.description%",
+                        "when": "workspacePlatform == linux && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-gcc-linux.md"
+                        },
+                        "completionEvents": [
+                            "onContext:cpptools.trustedCompilerFound"
+                        ]
+                    },
+                    {
+                        "id": "verify.compiler.windows",
+                        "title": "%c_cpp.walkthrough.set.up.title%",
+                        "description": "%c_cpp.walkthrough.compilers.found.description%",
+                        "when": "workspacePlatform == windows && cpptools.scanForCompilersDone == true && cpptools.scanForCompilersEmpty == false",
+                        "media": {
+                            "markdown": "dist/walkthrough/installcompiler/install-compiler-windows.md"
+                        },
+                        "completionEvents": [
+                            "onContext:cpptools.trustedCompilerFound"
+                        ]
+                    },
+                    {
+                        "id": "create.cpp.file",
+                        "title": "%c_cpp.walkthrough.create.cpp.file.title%",
+                        "description": "%c_cpp.walkthrough.create.cpp.file.description%",
+                        "media": {
+                            "svg": "dist/walkthrough/images/create-a-file.svg",
+                            "altText": "%c_cpp.walkthrough.create.cpp.file.altText%"
+                        }
+                    },
+                    {
+                        "id": "relaunch.developer.command.prompt.windows",
+                        "title": "%c_cpp.walkthrough.command.prompt.title%",
+                        "description": "%c_cpp.walkthrough.command.prompt.description%",
+                        "when": "workspacePlatform == windows",
+                        "media": {
+                            "markdown": "dist/walkthrough/devcommandprompt/open-developer-command-prompt.md"
+                        },
+                        "completionEvents": [
+                            "onContext:cpptools.msvcEnvironmentFound"
+                        ]
+                    },
+                    {
+                        "id": "run.project.mac",
+                        "title": "%c_cpp.walkthrough.run.debug.title%",
+                        "description": "%c_cpp.walkthrough.run.debug.mac.description%",
+                        "when": "workspacePlatform == mac",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.run.debug.windows.altText%",
+                            "svg": "dist/walkthrough/images/run-and-debug.svg"
+                        }
+                    },
+                    {
+                        "id": "run.project.linux",
+                        "title": "%c_cpp.walkthrough.run.debug.title%",
+                        "description": "%c_cpp.walkthrough.run.debug.linux.description%",
+                        "when": "workspacePlatform == linux",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.run.debug.windows.altText%",
+                            "svg": "dist/walkthrough/images/run-and-debug.svg"
+                        }
+                    },
+                    {
+                        "id": "run.project.windows",
+                        "title": "%c_cpp.walkthrough.run.debug.title%",
+                        "description": "%c_cpp.walkthrough.run.debug.windows.description%",
+                        "when": "workspacePlatform == windows",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.run.debug.windows.altText%",
+                            "svg": "dist/walkthrough/images/run-and-debug.svg"
+                        }
+                    },
+                    {
+                        "id": "customize.debugging.linux",
+                        "title": "%c_cpp.walkthrough.customize.debugging.title%",
+                        "when": "workspacePlatform == linux",
+                        "description": "%c_cpp.walkthrough.customize.debugging.mac.description%",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.customize.debugging.altText%",
+                            "svg": "dist/walkthrough/images/customize-debugging.svg"
+                        }
+                    },
+                    {
+                        "id": "customize.debugging.windows",
+                        "title": "%c_cpp.walkthrough.customize.debugging.title%",
+                        "when": "workspacePlatform == windows",
+                        "description": "%c_cpp.walkthrough.customize.debugging.linux.description%",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.customize.debugging.altText%",
+                            "svg": "dist/walkthrough/images/customize-debugging.svg"
+                        }
+                    },
+                    {
+                        "id": "customize.debugging.mac",
+                        "title": "%c_cpp.walkthrough.customize.debugging.title%",
+                        "when": "workspacePlatform == mac",
+                        "description": "%c_cpp.walkthrough.customize.debugging.windows.description%",
+                        "media": {
+                            "altText": "%c_cpp.walkthrough.customize.debugging.altText%",
+                            "svg": "dist/walkthrough/images/customize-debugging.svg"
+                        }
+                    }
+                ]
+            }
+        ],
         "commands": [
             {
-                "command": "acsl-astra-c-extension.sayHello",
-                "title": "Say Hello"
+                "command": "acsl-astra-c-extension.openRecentFiles",
+                "title": "Open Recent Astra ACSL Files"
+            },
+            {
+                "command": "acsl-astra-c-extension.BuildAndDebugFile",
+                "title": "%c_cpp.command.BuildAndDebugFile.title%",
+                "category": "C/C++",
+                "icon": "$(debug-alt)"
+            },
+            {
+                "command": "acsl-astra-c-extension.BuildAndRunFile",
+                "title": "%c_cpp.command.BuildAndRunFile.title%",
+                "category": "C/C++",
+                "icon": "$(run)"
+            },
+            {
+                "command": "acsl-astra-c-extension.AddDebugConfiguration",
+                "title": "%c_cpp.command.AddDebugConfiguration.title%",
+                "category": "C/C++",
+                "icon": "$(debug-configure)"
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "acsl-astra-c-extension.openRecentFiles",
+                "key": "ctrl+f1",
+                "mac": "cmd+f1",
+                "when": "editorTextFocus"
             }
         ],
         "jsonValidation": [
             {
                 "fileMatch": "c_cpp_properties.json",
-                "url": "cpptools-schema:///c_cpp_properties.schema.json"
+                "url": "acsl-astra-c-extension-schema:///c_cpp_properties.schema.json"
             }
         ],
         "completionItemProviders": [
@@ -138,9 +351,8 @@
         "@types/vscode": "^1.74.0"
     },
     "dependencies": {
+        "@types/node": "^18.15.11",
         "typescript": "^5.0.3",
-        "vsce": "~2.5.3",
-        "vscode-nls": "^5.2.0",
-        "vscode-nls-dev": "^4.0.3"
+        "vsce": "~2.5.3"
     }
 }

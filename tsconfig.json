@@ -3,5 +3,5 @@
     "outDir": "out",
     "target": "es6"
     },
-    "include": ["src/**/*.ts", "src/extension.ts"]
+    "include": ["src/**/*.ts", "src/extension.ts", "language-features/attachToProcess.ts"]
 }
